@@ -1,0 +1,123 @@
+<!doctype html>
+<html ng-app="DoTimer">
+  <head>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="scripts/timer.js"></script>
+    <script src="scripts/todo.js"></script>
+    <script src="scripts/localStorage.js"></script>
+    <style type="text/css">
+    .done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+input { float: left;}
+
+input[type="radio"], input[type="checkbox"] {
+    line-height: normal;
+    margin: 15px 10px 0;
+}
+
+section {
+     float: left;
+}
+
+ul.unstyled li { clear: left;  line-height: 40px;}
+</style>
+
+<script>
+angular.module('DoTimer', ['timer']);
+
+
+
+ function startTimer(sectionId) {
+            document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+            document.getElementById('start').style.display = 'none';
+
+        }
+        
+
+
+   function clearTimer(sectionId) {
+            document.getElementById(sectionId).getElementsByTagName('timer')[0].clear();
+           // document.getElementById('stop').style.display = 'none';
+           if (start.innerHTML === 'Resume') {
+            alert('yo');
+            start.innerHTML = 'Start';
+           }
+        }
+
+  function stopResumeTimer(sectionId, btn) {
+ 
+
+            if (btn.innerHTML === 'Stop') {
+                document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+                btn.innerHTML = 'Resume';
+                //document.getElementById('start').style.display = '';
+            }
+            else {
+                document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
+                btn.innerHTML = 'Stop';
+               // document.getElementById('start').style.display = '';
+            }
+        }
+
+      /*   
+      working functions, removed for testing.  
+      TODO: clean up once implementation decided 
+
+
+      function startTimer(sectionId, btn) {
+
+            if (btn.innerHTML === 'Start') {
+                document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+                btn.innerHTML = 'Resume';
+                  document.getElementById('start').style.display = 'none';
+            }
+            else {
+                document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
+
+                btn.innerHTML = 'Start';
+                  document.getElementById('start').style.display = 'none';
+            }
+        }
+
+
+  function stopTimer(sectionId) {
+            document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+            document.getElementById('start').style.display = '';
+        }
+*/
+
+</script>
+  </head>
+  <body>
+    <h2>Todo</h2>
+    <div ng-controller="TodoCtrl">
+      <span>{{remaining()}} of {{todos.length}} remaining</span>
+      [ <a href="" ng-click="archive()">archive</a> ]
+      <ul class="unstyled">
+        <li ng-repeat="todo in todos" id="ng-scope ng-binding">
+          <input type="checkbox" ng-model="todo.done">
+           <section id="{{$index + 1}}-timer"><span class="done-{{todo.done}}">{{$index + 1}} - {{todo.text}}</span> <timer interval="1000">{{minutes}} minutes, {{seconds}} seconds.</timer>  
+
+      <button id="start" class="btn start" type="button" onclick="startTimer('{{$index + 1}}-timer', this)">Start</button> <button class="btn stop" type="button" onclick="stopResumeTimer('{{$index + 1}}-timer', this)">Stop</button>  <button class="btn clear" type="button" onclick="clearTimer('{{$index + 1}}-timer', this)">Clear</button>  
+
+
+    </section>
+        </li>
+      </ul>
+      <form ng-submit="addTodo()">
+        <br clear="both" />
+        <input type="text" ng-model="todoText"  size="30"
+               placeholder="add new todo here">
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+    </div>
+
+
+
+
+  </body>
+</html>

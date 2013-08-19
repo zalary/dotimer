@@ -1,14 +1,14 @@
-function TodoCtrl($scope, $store) {
-  $scope.todos = [
-    {text:'learn angular', done:true},
-    {text:'build an angular app', done:false}];
-
-
-angular.bootstrap(document, ['myapp']);
+ function TodoCtrl($scope) {
+    $scope.saved = localStorage.getItem('todos');
+    $scope.todos = (localStorage.getItem('todos')!==null) ? JSON.parse($scope.saved) : [ {text:'learn angular', done:true},
+    {text:'build an angular app', done:false}
+    ];
+    localStorage.setItem('todos', JSON.stringify($scope.todos));
  
   $scope.addTodo = function() {
     $scope.todos.push({text:$scope.todoText, done:false});
     $scope.todoText = '';
+    localStorage.setItem('todos', JSON.stringify($scope.todos));
   };
  
   $scope.remaining = function() {
@@ -25,5 +25,6 @@ angular.bootstrap(document, ['myapp']);
     angular.forEach(oldTodos, function(todo) {
       if (!todo.done) $scope.todos.push(todo);
     });
+    localStorage.setItem('todos', JSON.stringify($scope.todos));
   };
 }

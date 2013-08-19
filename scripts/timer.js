@@ -58,10 +58,13 @@ angular.module('timer', [])
                 };
 
                 $scope.clear = $element[0].clear = function () {
-                    $scope.startTime = new Date();
+                    $scope.startTime = '0';
+                    $scope.minutes = '0';
+                    $scope.seconds = '0';
+                    $scope.hours = '0';
                     resetTimeout();
-
                 };
+
 
                 $scope.destroy = $element.bind('$destroy', function () {
                     $timeout.cancel($scope.timeoutId);
